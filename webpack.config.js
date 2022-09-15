@@ -16,6 +16,15 @@ module.exports = {
     }),
   ],
 
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+    ]
+  },
+
   devtool: 'inline-source-map',
   devServer: {
     static: './dist',

@@ -1,0 +1,14 @@
+.mainContainer{
+    display: flex;
+    gap:10px;
+    justify-content: space-between;
+}
+.menuContainer{
+    display: flex;
+    flex-direction: column;
+
+    gap:10px;
+}
+.canvasContainer{
+    border:1px solid;
+}

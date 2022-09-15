@@ -1,4 +1,7 @@
 .button-ui{
     background: #fff;
     border-radius: 3px;
+
+    cursor:pointer;
+    width: 100%;
 }

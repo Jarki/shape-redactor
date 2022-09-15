@@ -2,20 +2,34 @@ import Canvas from './components/canvas/'
 import random from './random'
 import Menu from './components/menu'
 import Div from './dom-components/div'
+import './index.css'
 
-document.body.appendChild(Div(
-    'container', ['container']
-));
+const mainContainer = Div(
+    'mainContainer', ['mainContainer']
+)
+
+document.body.appendChild(mainContainer);
+
 
 const menuContainer = Div(
-    'menu', 'menu'
+    'menuContainer', ['menuContainer']
 );
-document.body.appendChild(menuContainer);
-Menu(menuContainer);    
 
 let canvasW = 600;
 let canvasH = 600;
+const canvasContainerID = 'canvasContainer';
 
-let canvas = new Canvas('container', canvasW, canvasH);
+const canvasContainer = Div(
+    'canvasContainer', ['canvasContainer']
+)
+
+canvasContainer.style = `width: ${canvasW}, height: ${canvasH}`
+
+mainContainer.appendChild(menuContainer);
+mainContainer.appendChild(canvasContainer);
+
+Menu(menuContainer, canvas);
+
+let canvas = new Canvas(canvasContainerID, canvasW, canvasH);
 let layer = canvas.addLayer();
 canvas.addCircle(layer, random(canvasW), random(canvasH));
