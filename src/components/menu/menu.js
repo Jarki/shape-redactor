@@ -10,7 +10,7 @@ export default function render(props) {
         "Add triangle",
         [{
             'event': 'click',
-            'function': () => alert()
+            'function': () => canvas.addTriangle()
         }
         ]
     )

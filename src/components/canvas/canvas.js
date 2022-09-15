@@ -1,5 +1,5 @@
 import Konva from 'konva'
-import { Transformer } from 'konva/lib/shapes/Transformer';
+import Triangle from '../../shapes/triangle';
 
 export default class Canvas {
     constructor(container, w = 500, h = 500) {
@@ -34,15 +34,29 @@ export default class Canvas {
         return layer;
     }
 
+    addTriangle() {
+        let trianglePoints = [
+            {"x": this.stage.width() / 2 - 50, "y": this.stage.height() / 2 + 30},
+            {"x": this.stage.width() / 2, "y": this.stage.height() / 2 - 30},
+            {"x": this.stage.width() / 2 + 50, "y": this.stage.height() / 2 + 30},
+        ];
+
+        let triangle = new Triangle(...trianglePoints);
+
+        triangle.on('click', () => {
+            this.transformer.nodes([triangle])
+        });
+
+        this.currentLayer.add(triangle);
+    }
+
     addRect() {
         let rect = new Konva.Rect({
             x: this.stage.width() / 2,
             y: this.stage.height() / 2,
             width: 70,
             height: 70,
-            fill: 'red',
-            stroke: 'black',
-            strokeWidth: 4,
+            fill: '#00D2FF',
             draggable: true
         });
 
@@ -57,10 +71,8 @@ export default class Canvas {
         let circle = new Konva.Circle({
             x: this.stage.width() / 2,
             y: this.stage.height() / 2,
-            radius: 70,
-            fill: 'red',
-            stroke: 'black',
-            strokeWidth: 4,
+            radius: 35,
+            fill: '#00D2FF',
             draggable: true
         });
 
