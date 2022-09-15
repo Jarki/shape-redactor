@@ -14,6 +14,14 @@ export default class Canvas {
         this.stage.add(layer);
         this.currentLayer = layer;
 
+        this.#setUpStage();
+
+        this.eventListeners = {
+            'shapeChanged': (e) => { },
+        };
+    }
+
+    #setUpStage(){
         let tr = new Konva.Transformer();
         tr.nodes([]);
         this.transformer = tr;
@@ -22,10 +30,6 @@ export default class Canvas {
         this.activeShape = undefined
 
         this.stage.on('click', (e) => { e.target.constructor.name === "Stage" ? this.setActiveShape(undefined) : "" });
-
-        this.eventListeners = {
-            'shapeChanged': (e) => { },
-        };
     }
 
     setEventListener(event, func) {
@@ -112,7 +116,7 @@ export default class Canvas {
         circle.on('click', () => {
             this.setActiveShape(circle)
         });
-
+        
         this.currentLayer.add(circle);
     }
 
@@ -122,5 +126,14 @@ export default class Canvas {
 
     fromJSON(data){
         this.stage = Konva.Node.create(data, this.container);
+
+        this.currentLayer = this.stage.children[0];
+        for(let shape of this.currentLayer.children){
+            shape.on('click', () => {
+                this.setActiveShape(shape)
+            });
+        }
+
+        this.#setUpStage();
     }
 }

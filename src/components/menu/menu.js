@@ -88,7 +88,6 @@ export default function Menu(props) {
                     canvas.fromJSON(JSON.parse(event.target.result))
                 }
                 file = file.files[0]
-                console.log(file)
                 reader.readAsText(file);
             }
         }]
