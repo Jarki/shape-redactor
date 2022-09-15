@@ -14,10 +14,26 @@ export default class Canvas {
         this.currentLayer = layer;
 
         let tr = new Konva.Transformer();
+        tr.nodes([]);
         this.transformer = tr;
         this.currentLayer.add(tr);
 
-        this.stage.on('click', (e) => { e.target.constructor.name === "Stage" ? tr.nodes([]) : "" })
+        this.activeShape = undefined
+
+        this.stage.on('click', (e) => { e.target.constructor.name === "Stage" ? this.setActiveShape(undefined) : "" });
+
+        this.eventListeners = {
+            'shapeChanged': (e) => { },
+        };
+    }
+
+    setEventListener(event, func) {
+        if (!(event in this.eventListeners)) {
+            console.error("Error: no such event");
+            return;
+        }
+
+        this.eventListeners[event] = func;
     }
 
     getSize() {
@@ -34,17 +50,30 @@ export default class Canvas {
         return layer;
     }
 
+    setActiveShape(shape) {
+        this.activeShape = shape;
+
+        this.eventListeners['shapeChanged'](shape);
+
+        if (!shape) {
+            this.transformer.nodes([]);
+            return;
+        }
+
+        this.transformer.nodes([this.activeShape]);
+    }
+
     addTriangle() {
         let trianglePoints = [
-            {"x": this.stage.width() / 2 - 50, "y": this.stage.height() / 2 + 30},
-            {"x": this.stage.width() / 2, "y": this.stage.height() / 2 - 30},
-            {"x": this.stage.width() / 2 + 50, "y": this.stage.height() / 2 + 30},
+            { "x": this.stage.width() / 2 - 50, "y": this.stage.height() / 2 + 30 },
+            { "x": this.stage.width() / 2, "y": this.stage.height() / 2 - 30 },
+            { "x": this.stage.width() / 2 + 50, "y": this.stage.height() / 2 + 30 },
         ];
 
         let triangle = new Triangle(...trianglePoints);
 
         triangle.on('click', () => {
-            this.transformer.nodes([triangle])
+            this.setActiveShape(triangle)
         });
 
         this.currentLayer.add(triangle);
@@ -52,8 +81,8 @@ export default class Canvas {
 
     addRect() {
         let rect = new Konva.Rect({
-            x: this.stage.width() / 2,
-            y: this.stage.height() / 2,
+            x: this.stage.width() / 2 - 35,
+            y: this.stage.height() / 2 - 35,
             width: 70,
             height: 70,
             fill: '#00D2FF',
@@ -61,7 +90,7 @@ export default class Canvas {
         });
 
         rect.on('click', () => {
-            this.transformer.nodes([rect])
+            this.setActiveShape(rect)
         });
 
         this.currentLayer.add(rect);
@@ -77,7 +106,7 @@ export default class Canvas {
         });
 
         circle.on('click', () => {
-            this.transformer.nodes([circle])
+            this.setActiveShape(circle)
         });
 
         this.currentLayer.add(circle);

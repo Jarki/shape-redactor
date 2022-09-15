@@ -1,9 +1,27 @@
 import Button from '../../dom-components/button'
-import random from '../../random'
+import ShapeRedactor from '../shape-redactor/shape-redactor';
 import './menu.css'
 
-export default function render(props) {
+export default function Menu(props) {
     const canvas = props.canvas;
+    let shapeRedactor = undefined;
+
+    canvas.setEventListener('shapeChanged', (shape) => {
+        if (shape) {
+            if (shapeRedactor == undefined) {
+                shapeRedactor = ShapeRedactor({
+                    'value': shape.getFill(),
+                    'onChange': (color) => { shape.fill(color) }
+                })
+
+                props.parent.appendChild(shapeRedactor);
+            }
+            return;
+        }
+
+        if (shapeRedactor) props.parent.removeChild(shapeRedactor);
+        shapeRedactor = undefined;
+    });
 
     const addTriangleButton = Button("add-triangle-button",
         ["button-ui"],
@@ -23,7 +41,7 @@ export default function render(props) {
             'function': () => canvas.addRect()
         }
         ]
-    ) 
+    )
 
     const addCircleButton = Button("add-circle-button",
         ["button-ui"],
@@ -35,7 +53,7 @@ export default function render(props) {
             }
         }
         ]
-    ) 
+    )
 
     props.parent.appendChild(addTriangleButton);
     props.parent.appendChild(addRectButton);

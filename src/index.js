@@ -4,14 +4,14 @@ import Div from './dom-components/div'
 import './index.css'
 
 const mainContainer = Div(
-    'mainContainer', ['mainContainer']
+    'mainContainer', ['main-container']
 )
 
 document.body.appendChild(mainContainer);
 
 
 const menuContainer = Div(
-    'menuContainer', ['menuContainer']
+    'menuContainer', ['menu-container', 'vertical-flex-container']
 );
 
 let canvasW = 600;
@@ -19,7 +19,7 @@ let canvasH = 600;
 const canvasContainerID = 'canvasContainer';
 
 const canvasContainer = Div(
-    'canvasContainer', ['canvasContainer']
+    canvasContainerID, ['canvas-container']
 )
 
 canvasContainer.style = `width: ${canvasW}, height: ${canvasH}`

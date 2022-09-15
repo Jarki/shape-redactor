@@ -1,14 +1,22 @@
-.mainContainer{
+.main-container{
     display: flex;
     gap:10px;
     justify-content: space-between;
 }
-.menuContainer{
-    display: flex;
-    flex-direction: column;
-
+.menu-container{
     gap:10px;
 }
-.canvasContainer{
+.vertical-flex-container{
+    display: flex;
+    flex-direction: column;
+}
+.flexible-row{
+    display: flex;
+    gap:10px;
+}
+.hidden{
+    display:none;
+}
+.canvas-container{
     border:1px solid;
 }
