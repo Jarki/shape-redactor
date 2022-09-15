@@ -1,5 +1,7 @@
+import { nanoid } from 'nanoid'
 import Button from '../../dom-components/button'
 import ShapeRedactor from '../shape-redactor/shape-redactor';
+import Input from '../../dom-components/input/input';
 import './menu.css'
 
 export default function Menu(props) {
@@ -54,7 +56,52 @@ export default function Menu(props) {
         ]
     )
 
+    const saveButton = Button("save-button",
+        ["button-ui"],
+        "Save composition",
+        [{
+            'event': 'click',
+            'function': () => {
+                var tempLink = document.createElement("a");
+                var taBlob = new Blob([canvas.toJSON()], { type: 'text/json' });
+
+                tempLink.setAttribute('href', URL.createObjectURL(taBlob));
+                tempLink.setAttribute('download', `${nanoid()}.json`);
+                tempLink.click();
+            }
+        }]
+    )
+
+    const loadButton = Button("load-button",
+        ["button-ui"],
+        "Load composition",
+        [{
+            'event': 'click',
+            'function': (e) => {
+                let file = document.querySelector('#file-input');
+                
+                if (!file.value.length) return;
+
+                let reader = new FileReader();
+
+                reader.onload = (event) => {
+                    canvas.fromJSON(JSON.parse(event.target.result))
+                }
+                file = file.files[0]
+                console.log(file)
+                reader.readAsText(file);
+            }
+        }]
+    )
+    const fileInput = Input({
+        "id": "file-input",
+        "type": "file"
+    })
+
     props.parent.appendChild(addTriangleButton);
     props.parent.appendChild(addRectButton);
     props.parent.appendChild(addCircleButton);
+    props.parent.appendChild(saveButton);
+    props.parent.appendChild(loadButton);
+    props.parent.appendChild(fileInput);
 }

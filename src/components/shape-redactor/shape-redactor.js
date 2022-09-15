@@ -7,7 +7,7 @@ export default function ShapeRedactor(props) {
 
     const colorLabel = Label({
         'for': 'color-input',
-        'text': `change color of ${props.shape}`
+        'text': `Change color of ${props.shape}`
     })
     const colorInput = Input({
         'id': 'color-input',

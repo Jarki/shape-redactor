@@ -8,6 +8,7 @@ export default class Canvas {
             width: w,
             height: h
         });
+        this.container = container;
 
         let layer = new Konva.Layer();
         this.stage.add(layer);
@@ -115,5 +116,11 @@ export default class Canvas {
         this.currentLayer.add(circle);
     }
 
+    toJSON(){
+        return this.stage.toJSON();
+    }
 
+    fromJSON(data){
+        this.stage = Konva.Node.create(data, this.container);
+    }
 }

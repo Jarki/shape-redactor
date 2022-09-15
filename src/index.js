@@ -14,7 +14,7 @@ const menuContainer = Div(
     'menuContainer', ['menu-container', 'vertical-flex-container']
 );
 
-let canvasW = 600;
+let canvasW = 1200;
 let canvasH = 600;
 const canvasContainerID = 'canvasContainer';
 
@@ -22,7 +22,7 @@ const canvasContainer = Div(
     canvasContainerID, ['canvas-container']
 )
 
-canvasContainer.style = `width: ${canvasW}, height: ${canvasH}`
+canvasContainer.style = `max-width: ${canvasW}, max-height: ${canvasH}`
 
 mainContainer.appendChild(menuContainer);
 mainContainer.appendChild(canvasContainer);
