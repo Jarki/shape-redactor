@@ -1,15 +1,17 @@
 import Canvas from './components/canvas/'
 import random from './random'
+import Menu from './components/menu'
+import Div from './dom-components/div'
 
-const createEl = () => {
-    let el = document.createElement('div');
-    el.setAttribute('id', 'container');
-    el.innerHTML = "Hello :)";
+document.body.appendChild(Div(
+    'container', ['container']
+));
 
-    return el;
-}
-
-document.body.appendChild(createEl());
+const menuContainer = Div(
+    'menu', 'menu'
+);
+document.body.appendChild(menuContainer);
+Menu(menuContainer);    
 
 let canvasW = 600;
 let canvasH = 600;

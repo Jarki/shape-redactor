@@ -8,7 +8,7 @@ export default function Button(id, classNames, value, eventListeners = undefined
         return;
     }
     b.classList.add(...classNames);
-    b.value = value;
+    b.innerHTML = value;
 
     if (eventListeners) eventListeners.forEach(listener => {
         b.addEventListener(listener.event, listener.function)
