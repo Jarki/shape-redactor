@@ -53,7 +53,7 @@ export default class Canvas {
     setActiveShape(shape) {
         this.activeShape = shape;
 
-        this.eventListeners['shapeChanged'](shape);
+        this.eventListeners['shapeChanged'](this.activeShape);
 
         if (!shape) {
             this.transformer.nodes([]);
@@ -75,6 +75,7 @@ export default class Canvas {
         triangle.on('click', () => {
             this.setActiveShape(triangle)
         });
+        triangle.name("triangle");
 
         this.currentLayer.add(triangle);
     }
@@ -86,7 +87,8 @@ export default class Canvas {
             width: 70,
             height: 70,
             fill: '#00D2FF',
-            draggable: true
+            draggable: true,
+            name: 'rectangle',
         });
 
         rect.on('click', () => {
@@ -102,7 +104,8 @@ export default class Canvas {
             y: this.stage.height() / 2,
             radius: 35,
             fill: '#00D2FF',
-            draggable: true
+            draggable: true,
+            name: 'circle',
         });
 
         circle.on('click', () => {

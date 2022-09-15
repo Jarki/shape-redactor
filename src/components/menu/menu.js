@@ -7,20 +7,19 @@ export default function Menu(props) {
     let shapeRedactor = undefined;
 
     canvas.setEventListener('shapeChanged', (shape) => {
-        if (shape) {
-            if (shapeRedactor == undefined) {
-                shapeRedactor = ShapeRedactor({
-                    'value': shape.getFill(),
-                    'onChange': (color) => { shape.fill(color) }
-                })
-
-                props.parent.appendChild(shapeRedactor);
-            }
-            return;
-        }
-
         if (shapeRedactor) props.parent.removeChild(shapeRedactor);
         shapeRedactor = undefined;
+
+        if (shape) {
+            shapeRedactor = ShapeRedactor({
+                'value': shape.getFill(),
+                'shape': shape.name(),
+                'onChange': (color) => { shape.fill(color) }
+            })
+
+            props.parent.appendChild(shapeRedactor);
+            return;
+        }
     });
 
     const addTriangleButton = Button("add-triangle-button",
