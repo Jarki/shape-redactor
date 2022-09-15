@@ -1,7 +1,10 @@
 import Button from '../../dom-components/button'
+import random from '../../random'
 import './menu.css'
 
-export default function render(parent) {
+export default function render(props) {
+    const canvas = props.canvas;
+
     const addTriangleButton = Button("add-triangle-button",
         ["button-ui"],
         "Add triangle",
@@ -17,7 +20,7 @@ export default function render(parent) {
         "Add rectangle",
         [{
             'event': 'click',
-            'function': () => alert()
+            'function': () => canvas.addRect()
         }
         ]
     ) 
@@ -27,12 +30,14 @@ export default function render(parent) {
         "Add circle",
         [{
             'event': 'click',
-            'function': () => alert()
+            'function': () => {
+                canvas.addCircle()
+            }
         }
         ]
     ) 
 
-    parent.appendChild(addTriangleButton);
-    parent.appendChild(addRectButton);
-    parent.appendChild(addCircleButton);
+    props.parent.appendChild(addTriangleButton);
+    props.parent.appendChild(addRectButton);
+    props.parent.appendChild(addCircleButton);
 }
