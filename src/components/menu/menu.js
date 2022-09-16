@@ -2,11 +2,13 @@ import { nanoid } from 'nanoid'
 import Button from '../../dom-components/button'
 import ShapeRedactor from '../shape-redactor/shape-redactor';
 import Input from '../../dom-components/input/input';
+import Animation from '../../animation/animation';
 import './menu.css'
 
 export default function Menu(props) {
     const canvas = props.canvas;
     let shapeRedactor = undefined;
+    let animator = new Animation(props.canvas.getLayer());
 
     canvas.setEventListener('shapeChanged', (shape) => {
         if (shapeRedactor) props.parent.removeChild(shapeRedactor);
@@ -17,7 +19,19 @@ export default function Menu(props) {
                 'value': shape.getFill(),
                 'shape': shape.name(),
                 'onChange': (color) => { shape.fill(color) },
-                'onRemove': () => { shape.destroy();canvas.setActiveShape(undefined) }
+                'onRemove': () => { shape.destroy(); canvas.setActiveShape(undefined) },
+                'addAnim': () => { animator.addAnim({
+                    shape,
+                    'anim':{
+                        'type': 'rotate',
+                        'clockwise': true,
+                        'duration': 1000
+                    }
+                }) },
+                'anims': animator.getAnims(shape),
+                'removeAnim': (id) => {
+                    animator.removeAnim(id);
+                }
             })
 
             props.parent.appendChild(shapeRedactor);
@@ -55,7 +69,31 @@ export default function Menu(props) {
             }
         }
         ]
-    )
+    );
+
+    const startAnimationButton = Button("start-anim-button",
+        ["button-ui"],
+        "Start animation",
+        [{
+            'event': 'click',
+            'function': () => {
+                animator.start();
+            }
+        }
+        ]
+    );
+
+    const stopAnimationButton = Button("stop-anim-button",
+        ["button-ui"],
+        "Stop animation",
+        [{
+            'event': 'click',
+            'function': () => {
+                animator.stop();
+            }
+        }
+        ]
+    );
 
     const saveButton = Button("save-button",
         ["button-ui"],
@@ -80,7 +118,7 @@ export default function Menu(props) {
             'event': 'click',
             'function': (e) => {
                 let file = document.querySelector('#file-input');
-                
+
                 if (!file.value.length) return;
 
                 let reader = new FileReader();
@@ -101,6 +139,8 @@ export default function Menu(props) {
     props.parent.appendChild(addTriangleButton);
     props.parent.appendChild(addRectButton);
     props.parent.appendChild(addCircleButton);
+    props.parent.appendChild(startAnimationButton);
+    props.parent.appendChild(stopAnimationButton);
     props.parent.appendChild(saveButton);
     props.parent.appendChild(loadButton);
     props.parent.appendChild(fileInput);

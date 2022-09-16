@@ -23,8 +23,24 @@ export default function ShapeRedactor(props) {
     const animButton = Button(
         "add-animation-button",
         ["button-ui"],
-        "Add animation"
+        "Add animation",
+        [{
+            'event': 'click',
+            'function': props.addAnim
+        }]
     );
+
+    for(let anim of props.anims){
+        shapeRedactor.appendChild(Button(
+            `remove-anim-button-${anim.id}`,
+            ["button-ui"],
+            `Remove animation ${anim.type}`,
+            [{
+                'event': 'click',
+                'function': () => props.removeAnim(anim.id)
+            }]
+        ));
+    }
 
     const removeButton = Button(
         "remove-button",

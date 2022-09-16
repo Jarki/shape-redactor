@@ -21,6 +21,10 @@ export default class Canvas {
         };
     }
 
+    getLayer(){
+        return this.stage.children[0];
+    }
+
     #setUpStage(){
         let tr = new Konva.Transformer();
         tr.nodes([]);
