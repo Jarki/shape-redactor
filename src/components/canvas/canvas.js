@@ -17,7 +17,7 @@ export default class Canvas {
         this.#setUpStage();
 
         this.eventListeners = {
-            'shapeChanged': (e) => { },
+            'shapeChanged': () => { },
         };
     }
 

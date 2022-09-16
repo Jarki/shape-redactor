@@ -1,6 +1,7 @@
 import Div from "../../dom-components/div";
 import Input from "../../dom-components/input";
 import Label from "../../dom-components/label";
+import Button from "../../dom-components/button/button";
 
 export default function ShapeRedactor(props) {
     const shapeRedactor = Div('shape-redactor', ['vertical-flex-container']);
@@ -8,7 +9,8 @@ export default function ShapeRedactor(props) {
     const colorLabel = Label({
         'for': 'color-input',
         'text': `Change color of ${props.shape}`
-    })
+    });
+
     const colorInput = Input({
         'id': 'color-input',
         'type': 'color',
@@ -18,7 +20,25 @@ export default function ShapeRedactor(props) {
         },]
     });
 
+    const animButton = Button(
+        "add-animation-button",
+        ["button-ui"],
+        "Add animation"
+    );
+
+    const removeButton = Button(
+        "remove-button",
+        ["button-ui"],
+        "Remove shape",
+        [{
+            'event':'click',
+            'function': () => props.onRemove(),
+        },]
+    );
+
     shapeRedactor.append(colorLabel);
     shapeRedactor.append(colorInput);
+    shapeRedactor.append(animButton);
+    shapeRedactor.append(removeButton);
     return shapeRedactor;
 }

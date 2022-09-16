@@ -16,7 +16,8 @@ export default function Menu(props) {
             shapeRedactor = ShapeRedactor({
                 'value': shape.getFill(),
                 'shape': shape.name(),
-                'onChange': (color) => { shape.fill(color) }
+                'onChange': (color) => { shape.fill(color) },
+                'onRemove': () => { shape.destroy();canvas.setActiveShape(undefined) }
             })
 
             props.parent.appendChild(shapeRedactor);
