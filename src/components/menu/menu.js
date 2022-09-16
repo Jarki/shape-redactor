@@ -20,14 +20,16 @@ export default function Menu(props) {
                 'shape': shape.name(),
                 'onChange': (color) => { shape.fill(color) },
                 'onRemove': () => { shape.destroy(); canvas.setActiveShape(undefined) },
-                'addAnim': () => { animator.addAnim({
-                    shape,
-                    'anim':{
-                        'type': 'rotate',
-                        'clockwise': true,
-                        'duration': 1000
-                    }
-                }) },
+                'addAnim': () => {
+                    animator.addAnim({
+                        shape,
+                        'anim': {
+                            'type': 'rotate',
+                            'clockwise': true,
+                            'duration': 1000
+                        }
+                    })
+                },
                 'anims': animator.getAnims(shape),
                 'removeAnim': (id) => {
                     animator.removeAnim(id);
@@ -39,68 +41,68 @@ export default function Menu(props) {
         }
     });
 
-    const addTriangleButton = Button("add-triangle-button",
-        ["button-ui"],
-        "Add triangle",
-        [{
-            'event': 'click',
-            'function': () => canvas.addTriangle()
+    const addTriangleButton = Button({
+        "id": "add-triangle-button",
+        "classNames": ["button-ui"],
+        "innerHTML": "Add triangle",
+        "eventListeners": [{
+            'click': () => canvas.addTriangle()
         }
         ]
-    )
+    });
 
-    const addRectButton = Button("add-rectangle-button",
-        ["button-ui"],
-        "Add rectangle",
-        [{
-            'event': 'click',
-            'function': () => canvas.addRect()
+    const addRectButton = Button({
+        "id": "add-rectangle-button",
+        "classNames": ["button-ui"],
+        "innerHTML": "Add rectangle",
+        "eventListeners": [{
+            'click': () => canvas.addRect()
         }
         ]
-    )
+    });
 
-    const addCircleButton = Button("add-circle-button",
-        ["button-ui"],
-        "Add circle",
-        [{
-            'event': 'click',
-            'function': () => {
+    const addCircleButton = Button({
+        "id": "add-circle-button",
+        "classNames": ["button-ui"],
+        "innerHTML": "Add circle",
+        "eventListeners": [{
+            'click': () => {
                 canvas.addCircle()
             }
         }
         ]
-    );
+    });
 
-    const startAnimationButton = Button("start-anim-button",
-        ["button-ui"],
-        "Start animation",
-        [{
-            'event': 'click',
-            'function': () => {
+    const startAnimationButton = Button({
+        "id": "start-anim-button",
+        "classNames": ["button-ui"],
+        "innerHTML": "Start animation",
+        "eventListeners": [{
+            'click': () => {
                 animator.start();
             }
         }
         ]
-    );
+    });
 
-    const stopAnimationButton = Button("stop-anim-button",
-        ["button-ui"],
-        "Stop animation",
-        [{
-            'event': 'click',
-            'function': () => {
+    const stopAnimationButton = Button({
+        "id": "stop-anim-button",
+        "classNames": ["button-ui"],
+        "innerHTML": "Stop animation",
+        "eventListeners": [{
+            'click': () => {
                 animator.stop();
             }
         }
         ]
-    );
+    });
 
-    const saveButton = Button("save-button",
-        ["button-ui"],
-        "Save composition",
-        [{
-            'event': 'click',
-            'function': () => {
+    const saveButton = Button({
+        "id": "save-button",
+        "classNames": ["button-ui"],
+        "innerHTML": "Save composition",
+        "eventListeners": [{
+            'click': () => {
                 var tempLink = document.createElement("a");
                 var taBlob = new Blob([canvas.toJSON()], { type: 'text/json' });
 
@@ -109,14 +111,14 @@ export default function Menu(props) {
                 tempLink.click();
             }
         }]
-    )
+    });
 
-    const loadButton = Button("load-button",
-        ["button-ui"],
-        "Load composition",
-        [{
-            'event': 'click',
-            'function': (e) => {
+    const loadButton = Button({
+        "id": "load-button",
+        "classNames": ["button-ui"],
+        "innerHTML": "Load composition",
+        "eventListeners": [{
+            'click': (e) => {
                 let file = document.querySelector('#file-input');
 
                 if (!file.value.length) return;
@@ -130,7 +132,7 @@ export default function Menu(props) {
                 reader.readAsText(file);
             }
         }]
-    )
+    });
     const fileInput = Input({
         "id": "file-input",
         "type": "file"
