@@ -20,13 +20,11 @@ export default function Menu(props) {
                 'shape': shape.name(),
                 'onChange': (color) => { shape.fill(color) },
                 'onRemove': () => { shape.destroy(); canvas.setActiveShape(undefined) },
-                'addAnim': () => {
+                'addAnim': (data) => {
                     animator.addAnim({
                         shape,
                         'anim': {
-                            'type': 'rotate',
-                            'clockwise': true,
-                            'duration': 1000
+                            ...data,
                         }
                     })
                 },

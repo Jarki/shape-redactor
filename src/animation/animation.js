@@ -67,7 +67,7 @@ export default class Animation {
                 var angularSpeed = 360 / props.anim.duration;
                 animFunc = (frame) => {
                     var angleDiff = (frame.timeDiff * angularSpeed);
-                    props.shape.rotate((-1 + 2 * props.anim.clockwise) * angleDiff);
+                    props.shape.rotate((-1 + 2 * !!props.anim.clockwise) * angleDiff);
                 }
                 break;
             case 'scale':

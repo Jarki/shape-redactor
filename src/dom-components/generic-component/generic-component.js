@@ -3,11 +3,15 @@ export default function GenericComponent(componentName, props) {
 
     if (props.id) comp.setAttribute('id', props.id);
 
+    if (props.name) comp.setAttribute('name', props.name);
+
     if (props.classNames && Array.isArray(props.classNames)) comp.classList.add(...props.classNames);
 
     if (props.value) comp.setAttribute('value', props.value);
 
     if (props.innerHTML) comp.innerHTML = props.innerHTML;
+
+    if (props.for) comp.htmlFor = props.for;
 
     props.type ? comp.setAttribute('type', props.type) : comp.setAttribute('type', 'text');
 

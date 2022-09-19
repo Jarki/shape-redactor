@@ -2,10 +2,12 @@ import Div from "../../dom-components/div";
 import Input from "../../dom-components/input";
 import Label from "../../dom-components/label";
 import Button from "../../dom-components/button/button";
+import RotateForm from "../rotate-animation-form/rotateForm";
+import TranslateForm from "../translate-animation-form/translateForm";
 
 export default function ShapeRedactor(props) {
     const shapeRedactor = Div({
-        'id': 'shape-redactor', 
+        'id': 'shape-redactor',
         'classNames': ['vertical-flex-container']
     });
 
@@ -23,14 +25,55 @@ export default function ShapeRedactor(props) {
         },]
     });
 
-    const animButton = Button({
-        "id": "add-animation-button",
-        "classNames": ["button-ui"],
-        "innerHTML": "Add animation",
-        "eventListeners": [{
-            'click': props.addAnim
+    let flexibleRow = Div({
+        'classNames': ['flexible-row']
+    });
+
+    const translateLabel = Label({
+        'for': 'anim-type-translate',
+        'innerHTML': 'Translate animation'
+    });
+
+    const radioSelectTranslate = Input({
+        'id': 'anim-type-translate',
+        'name': 'choose-anim-type',
+        'type': 'radio',
+        'eventListeners': [{
+            'change': handleAnimChange
         }]
     });
+
+    flexibleRow.append(translateLabel);
+    flexibleRow.append(radioSelectTranslate);
+    shapeRedactor.append(flexibleRow);
+
+    flexibleRow = Div({
+        'classNames': ['flexible-row']
+    });
+
+    const rotateLabel = Label({
+        'for': 'anim-type-rotate',
+        'innerHTML': 'Rotate animation'
+    });
+
+    const radioSelectRotate = Input({
+        'id': 'anim-type-rotate',
+        'name': 'choose-anim-type',
+        'type': 'radio',
+        'eventListeners': [{
+            'change': handleAnimChange
+        }]
+    });
+
+    flexibleRow.append(rotateLabel);
+    flexibleRow.append(radioSelectRotate);
+    shapeRedactor.append(flexibleRow);
+
+    const animSettingsContainer = Div({
+        'classNames': ['vertical-flex-container']
+    });
+
+    shapeRedactor.append(animSettingsContainer);
 
     for (let anim of props.anims) {
         shapeRedactor.appendChild(Button({
@@ -42,22 +85,46 @@ export default function ShapeRedactor(props) {
             }]
         }
         ));
-}
+    }
 
-const removeButton = Button({
-    "id": "remove-button",
-    "classNames": ["button-ui"],
-    "innerHTML": "Remove shape",
-    "eventListeners": [{
-        'click': () => props.onRemove(),
-    },
-    ]
-}
-);
+    function handleAnimChange(e) {
+        animSettingsContainer.textContent = '';
+        if (e.target.id === 'anim-type-rotate') {
+            animSettingsContainer.append(RotateForm({
+                'onSubmit': (data) => {
+                    props.addAnim({
+                        'type': 'rotate',
+                        ...data
+                    })
+                }
+            }));
+        }
+        else if (e.target.id === 'anim-type-translate') {
+            animSettingsContainer.append(TranslateForm({
+                'onSubmit': (data) => {
+                    props.addAnim({
+                        'type': 'translate',
+                        'axis': 'x',
+                        ...data
+                    })
+                }
+            }));
+        }
+    }
 
-shapeRedactor.append(colorLabel);
-shapeRedactor.append(colorInput);
-shapeRedactor.append(animButton);
-shapeRedactor.append(removeButton);
-return shapeRedactor;
+    shapeRedactor.append(colorLabel);
+    shapeRedactor.append(colorInput);
+
+    const removeButton = Button({
+        "id": "remove-button",
+        "classNames": ["button-ui"],
+        "innerHTML": "Remove shape",
+        "eventListeners": [{
+            'click': () => props.onRemove(),
+        },
+        ]
+    });
+
+    shapeRedactor.append(removeButton);
+    return shapeRedactor;
 }
