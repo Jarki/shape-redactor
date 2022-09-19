@@ -3,11 +3,6 @@ import { nanoid } from "nanoid";
 
 export default class Animation {
     constructor(layer) {
-        var amplitude = 100;
-        var period = 2000;
-        // in ms
-        var centerX = 100;
-
         this.anim = new Konva.Animation((frame) => {
             for (let anim of this.animations) {
                 anim.anim(frame);

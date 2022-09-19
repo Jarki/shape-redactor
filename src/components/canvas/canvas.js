@@ -74,9 +74,9 @@ export default class Canvas {
 
     addTriangle() {
         let trianglePoints = [
-            { "x": this.stage.width() / 2 - 50, "y": this.stage.height() / 2 + 30 },
-            { "x": this.stage.width() / 2, "y": this.stage.height() / 2 - 30 },
-            { "x": this.stage.width() / 2 + 50, "y": this.stage.height() / 2 + 30 },
+            { "x": this.stage.width() / 2 - 50, "y": this.stage.height() / 2 - 60},
+            { "x": this.stage.width() / 2, "y": this.stage.height() / 2 },
+            { "x": this.stage.width() / 2 + 50, "y": this.stage.height() / 2 - 60 },
         ];
 
         let triangle = new Triangle(...trianglePoints);
@@ -85,19 +85,23 @@ export default class Canvas {
             this.setActiveShape(triangle)
         });
         triangle.name("triangle");
+        triangle.offsetX(50);
+        triangle.offsetY(30);
 
         this.currentLayer.add(triangle);
     }
 
     addRect() {
         let rect = new Konva.Rect({
-            x: this.stage.width() / 2 - 35,
-            y: this.stage.height() / 2 - 35,
+            x: this.stage.width() / 2,
+            y: this.stage.height() / 2,
             width: 70,
             height: 70,
             fill: '#00D2FF',
             draggable: true,
             name: 'rectangle',
+            offsetX: 35,
+            offsetY: 35
         });
 
         rect.on('click', () => {
